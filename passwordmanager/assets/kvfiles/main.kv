@@ -1,0 +1,265 @@
+<Button>:
+    font_size: 20
+    background_disabled_normal: ''
+
+
+<TextInput>:
+    font_size: 20
+
+<Account@TextInput>:
+    id: account
+    hint_text: 'Digite a conta'
+    background_color: (239/255, 203/255, 104/255, 1)
+    color: (0, 0, 0, 1)
+    font_size: 20
+    height: 50
+    text_size: self.size
+    halign: 'left'
+    valign: 'center'
+    readonly: True
+
+<Login@TextInput>:
+    id: login
+    hint_text: 'Digite o login'
+    background_color: (239/255, 203/255, 104/255, 1)
+    color: (0, 0, 0, 1)
+    font_size: 20
+    height: 50
+    text_size: self.size
+    halign: 'left'
+    valign: 'center'
+    readonly: True
+
+<Password@TextInput>:
+    id: password
+    hint_text: 'Digite a senha'
+    background_color: (225/255, 239/255, 230/255, 1)
+    color: (0, 0, 0, 1)
+    font_size: 20
+    height: 50
+    readonly: True
+    password: True
+
+
+<Check@CheckBox>:
+    height: 50
+    canvas.before:
+        Color:
+            rgba: (225/255, 239/255, 230/255, 1)
+        Rectangle:
+            size: (20, 20)
+            pos: (self.pos[0]+30, self.pos[1]+15)
+
+<EnterPopup@Popup>:
+    title:'Credenciais Inválidas'
+    title_align: 'center'
+    size_hint:(None, None)
+    size:(400, 200)
+    auto_dismiss: False
+    background_normal: ''
+    BoxLayout:
+        orientation:'vertical'
+        spacing: 3
+        Label:
+            id: label
+            text: 'Usuário ou senha inválida'
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.6)
+            canvas.before:
+                Color:
+                    rgba: (239/255, 203/255, 104/255, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        Button:
+            text: 'X'
+            size_hint: (1, 0.4)
+            pos_hint: {'center_x': 0.5}
+            on_release: root.dismiss()
+
+<RegisterPopupError@Popup>:
+    title:'Usuário existente'
+    title_align: 'center'
+    size_hint:(None, None)
+    size:(420, 200)
+    auto_dismiss: False
+    BoxLayout:
+        orientation:'vertical'
+        spacing: 3
+        Label:
+            id: label
+            multiline: True
+            text: 'Tente cadastrar-se com outro nome de usuário'
+            color: (0, 0, 0, 1)
+            size_hint: (1, 0.6)
+            canvas.before:
+                Color:
+                    rgba: (239/255, 203/255, 104/255, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        Button:
+            text: 'X'
+            size_hint: (1, 0.4)
+            pos_hint: {'center_x': 0.5}
+            on_release: root.dismiss()
+
+
+
+<LoginScreen>:
+    FloatLayout:
+        id: loginLayout
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        size_hint: (0.45, 0.45)
+        spacing: 5
+        padding: 5
+        canvas.before:
+            Color:
+                rgba: (225/255, 239/255, 230/255, 1)
+            Rectangle:
+                size: root.ids.loginLayout.size
+                pos: root.ids.loginLayout.pos
+        FloatLayout:
+            size_hint: (None, None)
+            size: root.size
+            Image:
+                source: 'assets/media/python.png'
+                size_hint: (None, None)
+                size: (25, 25)
+                allow_stretch: True
+                pos_hint: {'center_x': 0.3, 'bottom': 0.2, 'center_y': 0.1}
+            Label:
+                text: 'Developed in Kivy by Lucas Moraes Marques'
+                pos_hint: {'center_x': 0.5, 'bottom': 0.2, 'center_y': 0.1}
+            Image:
+                source: 'assets/media/kivy.jpeg'
+                size_hint: (None, None)
+                size: (30, 30)
+                pos_hint: {'center_x': 0.7, 'bottom': 0.2, 'center_y': 0.1}
+        BoxLayout:
+            pos: root.ids.loginLayout.pos
+            orientation: 'vertical'
+            spacing: 5
+            padding: 5
+            Label:
+                id: label
+                text: 'Gerenciador de Senhas'
+                halign: 'center'
+                color: (22/255, 12/255, 40/255)
+                font_size: 0.4*root.ids.label.size[1]
+                canvas.before:
+                    Color:
+                        rgba: (239/255, 203/255, 104/255, 1)
+                    Rectangle:
+                        size: root.ids.label.size
+                        pos: root.ids.label.pos
+                pos_hint: {'center_x': 0.5, 'bottom': 0.2}
+            TextInput:
+                text: ''
+                id: login
+                multiline: False
+                hint_text: 'Digite seu login'
+
+            TextInput:
+                text: ''
+                id: psw
+                multiline: False
+                hint_text: 'Digite sua senha'
+                password: True
+            Button:
+                id: enter
+                text: 'Entrar'
+                background_normal: ''
+                background_color: (22/255, 12/255, 90/255)
+                on_release: root.enterUser(login.text, psw.text)
+
+            Button:
+                id: register
+                text: 'Cadastre-se'
+                background_normal: ''
+                background_color: (244/255, 96/255, 54/255)
+                on_release: root.createUser()
+
+
+<ManagerScreen>:
+
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            id: header
+            orientation: 'horizontal'
+            size_hint: (1, 0.1)
+            Image:
+                source: 'assets/media/user.png'
+                size_hint: (0.1, 0.8)
+            Label:
+                id:username
+                text: ''
+                size_hint:(0.2, 1)
+                pos_hint: {'left': 0.3}
+            Label:
+                id: session
+                size_hint: (0.5, 1)
+                pos_hint: {'top': 1}
+
+            Label:
+                id: time
+                size_hint: (0.2, 1)
+                pos_hint: {'top': 1}
+                canvas.after:
+                    Rectangle:
+                        source: 'assets/media/time.png'
+                        size: (30, 30)
+                        pos: (685, 555)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            FloatLayout:
+                orientation: 'vertical'
+                size_hint: (0.1, 1)
+                Button:
+                    id: edit
+                    background_normal: 'assets/media/edit.png'
+                    size_hint: (None, None)
+                    size: (50, 50)
+                    pos_hint:{'center_y':0.70, 'center_x':0.5}
+                    on_release: root.editCred()
+                Button:
+                    id: add
+                    background_normal: 'assets/media/add.png'
+                    size_hint: (None, None)
+                    size: (50, 50)
+                    pos_hint:{'center_y':0.60, 'center_x':0.5}
+                    on_release: root.addCred()
+
+                Button:
+                    id: remove
+                    background_normal: 'assets/media/remove.png'
+                    size_hint: (None, None)
+                    size: (50, 50)
+                    pos_hint:{'center_y':0.50, 'center_x':0.5}
+                    on_release: root.removeCred()
+                Button:
+                    id: return
+                    text: 'Encerrar \n Sessão'
+                    background_normal: ''
+                    background_color: (244/255, 96/255, 54/255)
+                    size_hint: (None, None)
+                    font_size: 14
+                    size: (70, 50)
+                    pos_hint:{'center_y':0.05, 'center_x':0.5}
+                    on_release: root.returnHome()
+
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+                GridLayout:
+                    id: grid
+                    cols: 4
+                    size_hint_y: None
+                    height: 800
+                    spacing: 5
+
+
+
+
